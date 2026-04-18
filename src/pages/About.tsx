@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Award, Users, ThumbsUp, MapPin, Phone, Mail, Calendar, ShieldCheck, Star } from 'lucide-react';
+import { Award, Users, ThumbsUp, MapPin, Phone, Calendar, ShieldCheck, Star } from 'lucide-react';
 
 const About: React.FC = () => {
   const stats = [
@@ -13,7 +13,6 @@ const About: React.FC = () => {
   return (
     <div className="pt-28 pb-20 dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Intro Section with Father's Photo */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center mb-32">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -53,7 +52,6 @@ const About: React.FC = () => {
             viewport={{ once: true }}
             className="lg:col-span-5 relative"
           >
-            {/* The Professional Frame */}
             <div className="relative group">
               <div className="rounded-[4rem] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.4)] border-[16px] border-white dark:border-slate-800 backdrop-blur-xl animate-float relative z-10">
                 <img 
@@ -63,12 +61,8 @@ const About: React.FC = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent"></div>
               </div>
-              
-              {/* Decorative Elements */}
               <div className="absolute -top-10 -right-10 w-40 h-40 bg-accent/20 rounded-full blur-3xl -z-10 animate-pulse"></div>
               <div className="absolute -bottom-10 -left-10 w-60 h-60 bg-primary/20 rounded-full blur-3xl -z-10"></div>
-              
-              {/* floating Name Tag */}
               <motion.div 
                 animate={{ y: [0, -15, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -84,7 +78,6 @@ const About: React.FC = () => {
           </motion.div>
         </div>
 
-        {/* Stats Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-32">
           {stats.map((stat, idx) => (
             <motion.div
@@ -102,7 +95,6 @@ const About: React.FC = () => {
           ))}
         </div>
 
-        {/* Contact Info Card */}
         <section className="bg-primary rounded-[4rem] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.3)] relative">
           <div className="absolute top-0 right-0 w-96 h-96 bg-accent/5 rounded-full -mr-32 -mt-32 blur-3xl"></div>
           <div className="grid grid-cols-1 md:grid-cols-2">
@@ -139,7 +131,6 @@ const About: React.FC = () => {
           </div>
         </section>
 
-        {/* Google Maps Section */}
         <section className="mt-32 mb-12">
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8 text-center md:text-left">
             <div>

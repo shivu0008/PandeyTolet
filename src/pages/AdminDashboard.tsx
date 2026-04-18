@@ -6,14 +6,14 @@ import { collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, updateDoc 
 import { useNavigate } from 'react-router-dom';
 import imageCompression from 'browser-image-compression';
 import { 
-  Plus, LogOut, Image as ImageIcon, Trash2, Home as HomeIcon, 
-  MapPin, IndianRupee, CheckCircle, AlertCircle, Zap, Tag, X, Star, MessageSquare
+  Plus, Image as ImageIcon, Trash2, 
+  Tag, Star, Zap
 } from 'lucide-react';
 
 const AdminDashboard: React.FC = () => {
-  const [user, setUser] = useState<any>(null);
+  const [, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveFaq] = useState<'listings' | 'reviews'>('listings');
+  const [activeTab, setActiveTab] = useState<'listings' | 'reviews'>('listings');
   const [properties, setProperties] = useState<any[]>([]);
   const [reviews, setReviews] = useState<any[]>([]);
   const [uploading, setUploading] = useState(false);
@@ -151,20 +151,20 @@ const AdminDashboard: React.FC = () => {
             <h1 className="text-4xl font-black text-primary dark:text-white tracking-tighter uppercase italic">Admin Panel</h1>
             <div className="flex gap-4 mt-4">
               <button 
-                onClick={() => setActiveFaq('listings')}
+                onClick={() => setActiveTab('listings')}
                 className={`px-6 py-2 rounded-full text-xs font-black uppercase tracking-widest transition-all ${activeTab === 'listings' ? 'bg-accent text-primary' : 'bg-white/5 text-gray-400'}`}
               >
                 Listings
               </button>
               <button 
-                onClick={() => setActiveFaq('reviews')}
+                onClick={() => setActiveTab('reviews')}
                 className={`px-6 py-2 rounded-full text-xs font-black uppercase tracking-widest transition-all ${activeTab === 'reviews' ? 'bg-accent text-primary' : 'bg-white/5 text-gray-400'}`}
               >
                 Reviews ({reviews.length})
               </button>
             </div>
           </div>
-          <button onClick={handleLogout} className="bg-red-500/10 text-red-500 px-6 py-2 rounded-xl font-black text-xs hover:bg-red-500 hover:text-white transition-all">Logout</button>
+          <button onClick={handleLogout} className="bg-red-500/10 text-red-500 px-6 py-2 rounded-xl font-black text-xs hover:bg-red-500 hover:text-white transition-all text-shadow-sm">Logout</button>
         </div>
 
         <AnimatePresence mode="wait">
@@ -199,6 +199,8 @@ const AdminDashboard: React.FC = () => {
                       <p className="text-[10px] font-black uppercase text-gray-500">{uploading ? 'Processing...' : `Select Photos (${selectedFiles.length})`}</p>
                     </div>
                     {previews.length > 0 && <div className="flex flex-wrap gap-2 py-2">{previews.map((url, i) => <div key={i} className="w-16 h-16 rounded-lg overflow-hidden border border-accent/20"><img src={url} className="w-full h-full object-cover" /></div>)}</div>}
+                    {error && <div className="text-red-500 text-[10px] font-bold uppercase">{error}</div>}
+                    {success && <div className="text-green-500 text-[10px] font-bold uppercase">{success}</div>}
                     <button type="submit" disabled={uploading || selectedFiles.length === 0} className="w-full btn-shiny !bg-accent !text-primary !py-4 rounded-2xl font-black uppercase tracking-widest text-xs">Publish Listing</button>
                   </form>
                 </div>

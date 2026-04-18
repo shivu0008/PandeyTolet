@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { MessageCircle, Home as HomeIcon, Key, Star, ArrowRight, Zap, Plus, Minus, HelpCircle, MessageSquare, X } from 'lucide-react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { MessageCircle, Home as HomeIcon, Key, Star, ArrowRight, Zap, Plus, Minus, HelpCircle, MessageSquare, X, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { collection, getDocs, query, orderBy, limit, addDoc } from 'firebase/firestore';
 import { db } from '../firebase/config';
@@ -71,6 +71,13 @@ const Home: React.FC = () => {
     { q: "What is your service commission?", h: "आपकी सर्विस फीस कितनी है?", a: "We charge a nominal service fee for finding your perfect home and handling all legal verification. Call us for a transparent quote." }
   ];
 
+  const fadeInUpProps = {
+    initial: { opacity: 0, y: 40 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, margin: "-100px" },
+    transition: { duration: 0.8 }
+  };
+
   return (
     <div className="overflow-hidden bg-white dark:bg-gray-900" ref={containerRef}>
       {/* Hero Section */}
@@ -97,10 +104,10 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Featured Collections */}
+      {/* Featured Collections with Scroll Reveal */}
       <section className="py-40 dark:bg-[#020D1A]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="flex flex-col md:flex-row justify-between items-end mb-24 gap-10">
+          <motion.div {...fadeInUpProps} className="flex flex-col md:flex-row justify-between items-end mb-24 gap-10">
             <div className="max-w-3xl">
               <h2 className="text-sm font-black text-accent uppercase tracking-[0.4em] mb-6">Collections</h2>
               <h3 className="text-7xl font-black text-primary dark:text-white tracking-tighter leading-none">Curated Spaces. <br />Personally Verified.</h3>
@@ -117,11 +124,11 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Trust Wall */}
+      {/* Trust Wall with Scroll Reveal */}
       <section className="py-40 relative bg-primary text-white overflow-hidden">
         <div className="absolute top-0 right-0 w-1/2 h-full bg-accent/5 -skew-x-12 translate-x-1/2"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="flex flex-col md:flex-row justify-between items-center mb-24 gap-8">
+          <motion.div {...fadeInUpProps} className="flex flex-col md:flex-row justify-between items-center mb-24 gap-8">
             <div className="text-center md:text-left">
               <h2 className="text-sm font-black text-accent uppercase tracking-[0.5em] mb-6">Social Proof</h2>
               <h3 className="text-6xl md:text-8xl font-black tracking-tighter italic leading-none">Why Families <br /> Trust Us.</h3>
@@ -142,25 +149,50 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Services */}
+      {/* Services with Scroll Reveal - FIXED BUTTON OVERFLOW */}
       <section className="py-40 bg-gray-50/50 dark:bg-gray-800/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="text-center mb-24">
+          <motion.div {...fadeInUpProps} className="text-center mb-24">
             <h2 className="text-sm font-black text-accent uppercase tracking-[0.4em] mb-6 underline decoration-accent decoration-4 underline-offset-8">Services</h2>
             <h3 className="text-6xl md:text-8xl font-black text-primary dark:text-white tracking-tighter">Premium Real Estate.</h3>
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 h-auto">
             {services.map((s, idx) => (
-              <motion.div key={idx} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.1 }} className={`${s.span} relative group overflow-hidden rounded-[3rem] p-12 glass-morph flex flex-col justify-between min-h-[400px]`}><div className={`absolute inset-0 bg-gradient-to-br ${s.color} opacity-30 group-hover:opacity-60 transition-opacity duration-700`}></div><div className="relative z-10"><div className="w-24 h-24 bg-white dark:bg-gray-900 rounded-3xl shadow-2xl flex items-center justify-center mb-10 group-hover:rotate-[15deg] transition-transform duration-500">{s.icon}</div><h4 className="text-4xl font-black mb-6 dark:text-white tracking-tighter">{s.title}</h4><p className="text-xl text-gray-500 dark:text-gray-400 font-medium leading-relaxed max-w-sm">{s.desc}</p></div><Link to={s.link} className="relative z-10 w-20 h-20 rounded-full bg-primary text-accent flex items-center justify-center group-hover:w-full group-hover:rounded-2xl transition-all duration-500"><span className="group-hover:block hidden font-black text-lg mr-4">Explore {s.title}</span><ArrowRight size={32} /></Link></motion.div>
+              <motion.div key={idx} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.1 }} className={`${s.span} relative group overflow-hidden rounded-[3rem] p-10 md:p-12 glass-morph flex flex-col justify-between min-h-[450px]`}>
+                <div className={`absolute inset-0 bg-gradient-to-br ${s.color} opacity-30 group-hover:opacity-60 transition-opacity duration-700`}></div>
+                <div className="relative z-10">
+                  <div className="w-24 h-24 bg-white dark:bg-gray-900 rounded-3xl shadow-2xl flex items-center justify-center mb-10 group-hover:rotate-[15deg] transition-transform duration-500">{s.icon}</div>
+                  <h4 className="text-4xl font-black mb-6 dark:text-white tracking-tighter">{s.title}</h4>
+                  <p className="text-xl text-gray-500 dark:text-gray-400 font-medium leading-relaxed max-w-sm">{s.desc}</p>
+                </div>
+                <div className="mt-8">
+                  <Link 
+                    to={s.link} 
+                    className="relative z-10 h-16 w-16 rounded-full bg-primary text-accent flex items-center justify-center group-hover:w-full group-hover:rounded-2xl transition-all duration-500 overflow-hidden px-4"
+                  >
+                    <span className="group-hover:block hidden font-black text-sm uppercase tracking-widest mr-3 whitespace-nowrap">
+                      Explore Service
+                    </span>
+                    <ArrowRight size={24} className="shrink-0" />
+                  </Link>
+                </div>
+              </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Owner's Corner with Scroll Reveal */}
+      <section className="py-32 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div {...fadeInUpProps} className="glass-morph p-12 md:p-20 rounded-[4rem] border-white/10 relative overflow-hidden"><div className="absolute -bottom-20 -right-20 w-96 h-96 bg-primary opacity-10 rounded-full blur-[100px]"></div><div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10"><div><div className="inline-flex items-center gap-3 py-2 px-6 rounded-full bg-accent/10 border border-accent/20 text-accent font-black text-xs uppercase tracking-[0.3em] mb-8">For House Owners</div><h2 className="text-5xl md:text-7xl font-black text-primary dark:text-white tracking-tighter leading-none mb-8 italic uppercase">Let Us Manage <br /> <span className="text-accent">Your Property.</span></h2><p className="text-xl text-gray-500 dark:text-gray-400 font-bold leading-relaxed mb-10">Join 500+ trusted owners in Patna. We handle the tenant filtering, verification, and paperwork while you enjoy the peace of mind.</p><div className="flex flex-col sm:flex-row gap-6"><motion.a whileHover={{ scale: 1.05 }} href="tel:9334966607" className="btn-shiny !bg-primary !text-white !px-10 flex items-center justify-center gap-3"><Phone size={24} /> List With Us</motion.a></div></div><div className="grid grid-cols-1 sm:grid-cols-2 gap-6">{[{ title: 'Verified Tenants', desc: 'Strict background checks for safety.' }, { title: 'Fast Results', desc: 'Occupancy within 72 hours usually.' }, { title: 'Legal Support', desc: 'Hassle-free agreement handling.' }, { title: '23+ Years Trust', desc: 'Patna\'s most reliable network.' }].map((item, i) => (<motion.div key={i} initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.4 + (i * 0.1) }} className="bg-white/5 backdrop-blur-md p-8 rounded-[2.5rem] border border-white/5 hover:border-accent/30 transition-colors"><h4 className="text-accent font-black text-lg mb-2 tracking-tighter">{item.title}</h4><p className="text-gray-500 text-sm font-bold">{item.desc}</p></motion.div>))}</div></div></motion.div>
         </div>
       </section>
 
       {/* FAQ & CTA */}
       <section className="py-40 bg-gray-50/30 dark:bg-slate-900/20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-           <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="text-center mb-20"><div className="inline-flex items-center gap-3 py-2 px-6 rounded-full bg-primary/5 dark:bg-white/5 border border-primary/10 dark:border-white/10 mb-8"><HelpCircle className="text-accent" size={20} /><span className="text-primary dark:text-accent font-black text-xs uppercase tracking-[0.2em]">Questions?</span></div><h2 className="text-5xl md:text-7xl font-black text-primary dark:text-white tracking-tighter leading-none italic uppercase">Frequently Asked <br /> <span className="text-accent">Questions.</span></h2></motion.div><div className="space-y-6">{faqs.map((faq, idx) => (<motion.div key={idx} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.1 }} className="glass-morph rounded-[2.5rem] border-white/10 overflow-hidden"><button onClick={() => setActiveFaq(activeFaq === idx ? null : idx)} className="w-full p-8 md:p-10 flex items-center justify-between text-left group"><div><h4 className="text-xl md:text-2xl font-black text-primary dark:text-white tracking-tight group-hover:text-accent transition-colors mb-1">{faq.q}</h4><h5 className="text-accent font-bold text-[10px] uppercase tracking-widest opacity-60">{faq.h}</h5></div><div className={`p-4 rounded-2xl transition-all duration-500 ${activeFaq === idx ? 'bg-accent text-primary rotate-180' : 'bg-primary/5 dark:bg-white/5 text-accent'}`}>{activeFaq === idx ? <Minus size={24} /> : <Plus size={24} />}</div></button><AnimatePresence>{activeFaq === idx && <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="px-10 pb-10"><div className="pt-6 border-t border-gray-100 dark:border-white/5"><p className="text-lg text-gray-500 dark:text-gray-400 font-medium leading-relaxed">{faq.a}</p></div></motion.div>}</AnimatePresence></motion.div>))}</div>
+           <motion.div {...fadeInUpProps} className="text-center mb-20"><div className="inline-flex items-center gap-3 py-2 px-6 rounded-full bg-primary/5 dark:bg-white/5 border border-primary/10 dark:border-white/10 mb-8"><HelpCircle className="text-accent" size={20} /><span className="text-primary dark:text-accent font-black text-xs uppercase tracking-[0.2em]">Questions?</span></div><h2 className="text-5xl md:text-7xl font-black text-primary dark:text-white tracking-tighter leading-none italic uppercase">Frequently Asked <br /> <span className="text-accent">Questions.</span></h2></motion.div><div className="space-y-6">{faqs.map((faq, idx) => (<motion.div key={idx} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.1 }} className="glass-morph rounded-[2.5rem] border-white/10 overflow-hidden"><button onClick={() => setActiveFaq(activeFaq === idx ? null : idx)} className="w-full p-8 md:p-10 flex items-center justify-between text-left group"><div><h4 className="text-xl md:text-2xl font-black text-primary dark:text-white tracking-tight group-hover:text-accent transition-colors mb-1">{faq.q}</h4><h5 className="text-accent font-bold text-[10px] uppercase tracking-widest opacity-60">{faq.h}</h5></div><div className={`p-4 rounded-2xl transition-all duration-500 ${activeFaq === idx ? 'bg-accent text-primary rotate-180' : 'bg-primary/5 dark:bg-white/5 text-accent'}`}>{activeFaq === idx ? <Minus size={24} /> : <Plus size={24} />}</div></button><AnimatePresence>{activeFaq === idx && <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="px-10 pb-10"><div className="pt-6 border-t border-gray-100 dark:border-white/5"><p className="text-lg text-gray-500 dark:text-gray-400 font-medium leading-relaxed">{faq.a}</p></div></motion.div>}</AnimatePresence></motion.div>))}</div>
         </div>
       </section>
 

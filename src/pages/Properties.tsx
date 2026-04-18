@@ -67,7 +67,6 @@ const Properties: React.FC = () => {
     setFilteredProperties(result);
   }, [filterType, filterCategory, filterLocation, searchTerm, sortBy, allProperties]);
 
-  const locations = ['All', ...new Set(allProperties.map(p => p.location.split(',')[0].trim()))];
   const suggestions = allProperties
     .map(p => p.location.split(',')[0].trim())
     .filter((v, i, a) => a.indexOf(v) === i && v.toLowerCase().includes(searchTerm.toLowerCase()))
@@ -153,13 +152,11 @@ const Properties: React.FC = () => {
                   <p className="text-sm text-gray-500 dark:text-gray-400 font-bold leading-relaxed mb-8">Direct consultation with Sanjeev Pandey. Personal verification for every listing.</p>
                   <div className="space-y-4">
                     <a href="tel:9334966607" className="w-full block bg-primary text-white py-4 rounded-2xl flex items-center justify-center gap-3 text-xs font-black uppercase tracking-widest shadow-xl"><Phone size={18} /> Consult Terms</a>
-                    <a href="https://wa.me/919934072003" target="_blank" className="w-full block bg-[#25D366] text-white py-4 rounded-2xl flex items-center justify-center gap-3 text-xs font-black uppercase tracking-widest shadow-lg">
-                      <MessageCircle size={18} /> WhatsApp Chat
-                    </a>
-                    </div>
-                    <p className="mt-4 text-[9px] text-gray-400 text-center font-bold uppercase tracking-widest">
-                    *By contacting us, you agree to our <Link to="/terms-and-conditions" className="text-accent underline">Terms & Conditions</Link>
-                    </p>
+                    <a href="https://wa.me/919934072003" target="_blank" className="w-full block bg-[#25D366] text-white py-4 rounded-2xl flex items-center justify-center gap-3 text-xs font-black uppercase tracking-widest shadow-lg"><MessageCircle size={18} /> WhatsApp Chat</a>
+                  </div>
+                  <p className="mt-4 text-[9px] text-gray-400 text-center font-bold uppercase tracking-widest">
+                  *By contacting us, you agree to our <Link to="/terms-and-conditions" className="text-accent underline">Terms & Conditions</Link>
+                  </p>
                 </div>
               </motion.div>
             </div>
