@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "title": "Modern 2BHK Flat in Kankarbagh",
+    "price": "₹15,000/month",
+    "location": "Kankarbagh, Patna",
+    "type": "Rent",
+    "category": "Residential",
+    "image": "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=800",
+    "beds": 2,
+    "baths": 2,
+    "featured": true
+  },
+  {
+    "id": 2,
+    "title": "Spacious 3BHK Apartment",
+    "price": "₹22,000/month",
+    "location": "Boring Road, Patna",
+    "type": "Rent",
+    "category": "Residential",
+    "image": "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=800",
+    "beds": 3,
+    "baths": 2,
+    "featured": true
+  },
+  {
+    "id": 3,
+    "title": "Commercial Shop for Rent",
+    "price": "₹35,000/month",
+    "location": "Fraser Road, Patna",
+    "type": "Rent",
+    "category": "Commercial",
+    "image": "https://images.unsplash.com/photo-1582037928867-67704ee587bf?auto=format&fit=crop&q=80&w=800",
+    "beds": 0,
+    "baths": 1,
+    "featured": false
+  },
+  {
+    "id": 4,
+    "title": "Luxurious 4BHK Villa",
+    "price": "₹1.2 Cr",
+    "location": "Patliputra Colony, Patna",
+    "type": "Buy",
+    "category": "Residential",
+    "image": "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&q=80&w=800",
+    "beds": 4,
+    "baths": 4,
+    "featured": true
+  },
+  {
+    "id": 5,
+    "title": "1BHK Studio for Students",
+    "price": "₹8,000/month",
+    "location": "Rajendra Nagar, Patna",
+    "type": "Rent",
+    "category": "Residential",
+    "image": "https://images.unsplash.com/photo-1536376074432-cd718fa5ef41?auto=format&fit=crop&q=80&w=800",
+    "beds": 1,
+    "baths": 1,
+    "featured": false
+  },
+  {
+    "id": 6,
+    "title": "Prime Office Space",
+    "price": "₹75,000/month",
+    "location": "Bailey Road, Patna",
+    "type": "Rent",
+    "category": "Commercial",
+    "image": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800",
+    "beds": 0,
+    "baths": 2,
+    "featured": false
+  },
+  {
+    "id": 7,
+    "title": "2BHK Semi-Furnished Flat",
+    "price": "₹12,500/month",
+    "location": "Anisabad, Patna",
+    "type": "Rent",
+    "category": "Residential",
+    "image": "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&q=80&w=800",
+    "beds": 2,
+    "baths": 2,
+    "featured": false
+  },
+  {
+    "id": 8,
+    "title": "Newly Built 3BHK Flat",
+    "price": "₹85 Lakhs",
+    "location": "Gola Road, Patna",
+    "type": "Buy",
+    "category": "Residential",
+    "image": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=800",
+    "beds": 3,
+    "baths": 2,
+    "featured": true
+  }
+]

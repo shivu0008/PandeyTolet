@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+  <defs>
+    <!-- Cyan Glow Filter -->
+    <filter id="cyanGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    
+    <!-- Gradients -->
+    <linearGradient id="pinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#00B4D8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0077B6;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="darkBlueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#023E8A;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#03045E;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Outer Map Pin Shape (Glow Outline) -->
+  <path d="M250 420C150 300 100 220 100 150C100 70 167 10 250 10C333 10 400 70 400 150C400 220 350 300 250 420Z" 
+        fill="none" stroke="#00F2FF" stroke-width="12" filter="url(#cyanGlow)" />
+  
+  <!-- Main Pin Fill -->
+  <path d="M250 410C160 300 115 220 115 150C115 78 175 20 250 20C325 20 385 78 385 150C385 220 340 300 250 410Z" 
+        fill="#004A7C" />
+
+  <!-- Building 1 (Left) -->
+  <rect x="180" y="140" width="30" height="90" fill="#ffffff" opacity="0.9" />
+  <rect x="185" y="150" width="8" height="8" fill="#004A7C" />
+  <rect x="185" y="165" width="8" height="8" fill="#004A7C" />
+  <rect x="185" y="180" width="8" height="8" fill="#004A7C" />
+
+  <!-- Building 2 (Center - High) -->
+  <rect x="215" y="90" width="50" height="140" fill="#ffffff" />
+  <rect x="225" y="105" width="10" height="10" fill="#004A7C" />
+  <rect x="240" y="105" width="10" height="10" fill="#004A7C" />
+  <rect x="225" y="125" width="10" height="10" fill="#004A7C" />
+  <rect x="240" y="125" width="10" height="10" fill="#004A7C" />
+  <rect x="225" y="145" width="10" height="10" fill="#004A7C" />
+  <rect x="240" y="145" width="10" height="10" fill="#004A7C" />
+
+  <!-- Building 3 (Right) -->
+  <rect x="270" y="140" width="40" height="90" fill="#ffffff" opacity="0.9" />
+  <rect x="280" y="155" width="8" height="15" fill="#004A7C" />
+  <rect x="295" y="155" width="8" height="15" fill="#004A7C" />
+  <rect x="280" y="180" width="8" height="15" fill="#004A7C" />
+  <rect x="295" y="180" width="8" height="15" fill="#004A7C" />
+
+  <!-- House Shape (Base Overlay) -->
+  <path d="M160 230L250 160L340 230V280H160V230Z" fill="#ffffff" />
+  <!-- House Windows -->
+  <rect x="235" y="240" width="12" height="12" fill="#004A7C" />
+  <rect x="253" y="240" width="12" height="12" fill="#004A7C" />
+  <rect x="235" y="258" width="12" height="12" fill="#004A7C" />
+  <rect x="253" y="258" width="12" height="12" fill="#004A7C" />
+
+  <!-- Double Swoosh -->
+  <path d="M90 270C180 340 380 260 430 240" stroke="#00F2FF" stroke-width="14" fill="none" stroke-linecap="round" filter="url(#cyanGlow)" />
+  <path d="M100 290C190 355 370 275 420 255" stroke="#004A7C" stroke-width="6" fill="none" stroke-linecap="round" />
+  
+  <!-- Small Truck Icon -->
+  <g transform="translate(425, 225) scale(0.8)">
+    <rect x="0" y="10" width="30" height="18" rx="2" fill="#00F2FF" />
+    <path d="M30 14L40 14L45 28L30 28Z" fill="#00F2FF" />
+    <circle cx="8" cy="30" r="4" fill="#00F2FF" />
+    <circle cx="35" cy="30" r="4" fill="#00F2FF" />
+  </g>
+</svg>
