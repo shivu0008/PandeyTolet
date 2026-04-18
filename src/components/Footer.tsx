@@ -109,8 +109,13 @@ const Footer: React.FC = () => {
           <p className="text-gray-400 dark:text-gray-500 text-[10px] font-black uppercase tracking-[0.4em]">
             © {new Date().getFullYear()} Pandey To-Let Service • <span className="text-accent">23 Years of Trust</span>
           </p>
-          {/* Secret Link */}
-          <Link to="/admin-login" className="absolute bottom-0 right-0 w-8 h-8 opacity-0 cursor-default" title="Admin Access"></Link>
+          {/* Subtle Admin Link */}
+          <Link 
+            to="/admin-login" 
+            className="absolute bottom-0 right-0 p-4 text-[8px] text-gray-600 dark:text-gray-800 hover:text-accent transition-colors font-black uppercase tracking-[0.3em]"
+          >
+            Admin Portal
+          </Link>
         </div>
       </div>
     </footer>
