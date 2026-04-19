@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, SlidersHorizontal, MapPin, Phone, MessageCircle, Building2, SortAsc } from 'lucide-react';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
