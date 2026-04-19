@@ -156,12 +156,9 @@ const Properties: React.FC = () => {
                       <MessageCircle size={18} /> WhatsApp Chat
                     </a>
                     </div>
-                    <p className="mt-4 text-[9px] text-gray-400 text-center font-bold uppercase tracking-widest">
-                    *By contacting us, you agree to our <Link to="/terms-and-conditions" className="text-accent underline">Terms & Conditions</Link>
+                    <p className="mt-6 text-[9px] text-gray-400 text-center font-bold uppercase tracking-[0.2em] font-hindi">
+                    बेहतरीन डील्स और जानकारी के लिए अभी कॉल करें।
                     </p>
-                  <p className="mt-4 text-[9px] text-gray-400 text-center font-bold uppercase tracking-widest">
-                  *By contacting us, you agree to our <Link to="/terms-and-conditions" className="text-accent underline">Terms & Conditions</Link>
-                  </p>
                 </div>
               </motion.div>
             </div>
