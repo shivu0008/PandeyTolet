@@ -26,7 +26,7 @@ const Navbar: React.FC = () => {
 
   return (
     <nav
-      className={`fixed w-full z-[100] transition-all duration-500 ${
+      className={`fixed w-full z-[1000] transition-all duration-500 ${
         scrolled ? 'py-4' : 'py-8'
       }`}
     >

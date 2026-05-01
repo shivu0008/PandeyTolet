@@ -8,6 +8,30 @@ import PropertyCard from '../components/PropertyCard';
 import PropertySkeleton from '../components/PropertySkeleton';
 import HeroSlider from '../components/HeroSlider';
 
+interface Property {
+  id: string;
+  title: string;
+  price: string;
+  location: string;
+  type: string;
+  category: string;
+  image: string;
+  images?: string[];
+  beds: number;
+  baths: number;
+  featured: boolean;
+  status?: string;
+  createdAt: string;
+}
+
+interface Review {
+  id: string;
+  name: string;
+  rating: number;
+  comment: string;
+  createdAt: string;
+}
+
 const Home: React.FC = () => {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -17,35 +41,35 @@ const Home: React.FC = () => {
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
-  const [featuredProperties, setFeaturedProperties] = useState<any[]>([]);
-  const [sliderProperties, setSliderProperties] = useState<any[]>([]);
-  const [reviews, setReviews] = useState<any[]>([]);
+  const [featuredProperties, setFeaturedProperties] = useState<Property[]>([]);
+  const [sliderProperties, setSliderProperties] = useState<Property[]>([]);
+  const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
   
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [newReview, setNewReview] = useState({ name: '', rating: 5, comment: '' });
   const [submitting, setSubmitting] = useState(false);
 
-  useEffect(() => {
-    fetchLiveContent();
-  }, []);
-
   const fetchLiveContent = async () => {
     setLoading(true);
     try {
       const featQ = query(collection(db, 'properties'), orderBy('createdAt', 'desc'), limit(3));
       const featSnap = await getDocs(featQ);
-      setFeaturedProperties(featSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+      setFeaturedProperties(featSnap.docs.map(doc => ({ id: doc.id, ...doc.data() } as Property)));
 
       const sliderQ = query(collection(db, 'properties'), orderBy('createdAt', 'desc'), limit(5));
       const sliderSnap = await getDocs(sliderQ);
-      setSliderProperties(sliderSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+      setSliderProperties(sliderSnap.docs.map(doc => ({ id: doc.id, ...doc.data() } as Property)));
 
       const revQ = query(collection(db, 'reviews'), orderBy('createdAt', 'desc'), limit(6));
       const revSnap = await getDocs(revQ);
-      setReviews(revSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+      setReviews(revSnap.docs.map(doc => ({ id: doc.id, ...doc.data() } as Review)));
     } catch (err) { console.error(err); } finally { setLoading(false); }
   };
+
+  useEffect(() => {
+    fetchLiveContent();
+  }, []);
 
   const handleReviewSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -80,8 +104,8 @@ const Home: React.FC = () => {
 
   return (
     <div className="overflow-hidden bg-white dark:bg-gray-900" ref={containerRef}>
-      {/* Hero Section - Fixed pt-32 for collision, lower text sizes */}
-      <section className="relative min-h-[80vh] flex items-center pt-32 pb-12 mesh-gradient">
+      {/* Hero Section - Optimized for Mobile */}
+      <section className="relative min-h-[70vh] lg:min-h-[80vh] flex items-center pt-24 md:pt-32 pb-12 mesh-gradient">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <motion.div animate={{ scale: [1, 1.1, 1], x: [0, 30, 0] }} transition={{ duration: 15, repeat: Infinity }} className="absolute top-[-5%] right-[-5%] w-[40%] h-[40%] bg-accent/10 rounded-full blur-[100px]" />
         </div>
@@ -89,9 +113,9 @@ const Home: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             
-            {/* Content Side - Fixed mobile centering */}
+            {/* Content Side */}
             <motion.div style={{ opacity }} className="lg:col-span-6 text-center lg:text-left flex flex-col items-center lg:items-start">
-              <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.2 }} className="inline-flex items-center gap-2 py-1.5 px-3 rounded-full glass-morph border-accent/20 mb-6 shadow-sm"><span className="flex h-2 w-2 rounded-full bg-accent animate-ping"></span><span className="text-primary dark:text-accent font-black text-[8px] uppercase tracking-[0.2em]">The Patna Standard Since 2003</span></motion.div>
+              <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.2 }} className="inline-flex items-center gap-2 py-1.5 px-3 rounded-full glass-morph border-accent/20 mb-4 md:mb-6 shadow-sm"><span className="flex h-2 w-2 rounded-full bg-accent animate-ping"></span><span className="text-primary dark:text-accent font-black text-[8px] uppercase tracking-[0.2em]">The Patna Standard Since 2003</span></motion.div>
               
               <h1 className="text-3xl md:text-5xl lg:text-6xl font-black text-primary dark:text-white leading-[1.1] mb-5 tracking-tight uppercase italic">
                 Fast. Trusted. <br />
@@ -109,7 +133,6 @@ const Home: React.FC = () => {
               
               <div className="mt-8 flex flex-col items-center lg:items-start opacity-70">
                 <p className="text-[9px] text-gray-400 font-bold uppercase tracking-widest font-hindi">पूरी जानकारी और बेहतरीन डील्स के लिए अभी संपर्क करें।</p>
-                <p className="mt-1.5 text-[8px] text-gray-500 font-medium italic">*By contacting us, you agree to our <Link to="/terms-and-conditions" className="underline">Terms & Conditions</Link></p>
               </div>
             </motion.div>
             

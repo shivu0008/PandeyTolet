@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, Bed, Bath, Phone, MessageCircle, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
 
 interface PropertyCardProps {
   property: {
@@ -67,7 +66,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
       whileHover={isAvailable ? { y: -15 } : {}}
       className={`group relative bg-white dark:bg-gray-800 rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.05)] transition-all duration-500 border border-gray-100 dark:border-gray-700 ${!isAvailable ? 'opacity-80' : 'hover:shadow-accent/20'}`}
     >
-      <div className="relative h-72 overflow-hidden">
+      <div className="relative h-60 md:h-72 overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.img
             key={currentImg}
@@ -190,8 +189,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
             </motion.a>
           </div>
           <p className="text-[9px] text-gray-400 text-center font-bold uppercase tracking-widest">
-            {isAvailable ? '*By contacting us, you agree to our ' : 'This property is no longer available. '} 
-            <Link to="/terms-and-conditions" className="text-accent underline">Terms & Conditions</Link>
+            {isAvailable ? 'Contact now for more details & best deals' : 'This property is no longer available.'}
           </p>
         </div>
       </div>
