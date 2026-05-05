@@ -57,7 +57,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
 
 क्या यह अभी उपलब्ध है? कृपया मुझे और जानकारी दें। धन्यवाद।`;
 
-  const whatsappUrl = `https://wa.me/919934072003?text=${encodeURIComponent(message)}`;
+  const whatsappUrl = `https://wa.me/919334966607?text=${encodeURIComponent(message)}`;
 
   return (
     <motion.div
@@ -172,7 +172,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
           <div className="grid grid-cols-2 gap-4">
             <motion.a
               whileHover={isAvailable ? { scale: 1.02 } : {}}
-              href={isAvailable ? "tel:9334966607" : "#"}
+              href={isAvailable ? "tel:9934072003" : "#"}
               className={`flex items-center justify-center gap-2 py-4 rounded-2xl font-black transition-all text-[10px] uppercase tracking-widest border-2 ${isAvailable ? 'border-primary/10 dark:border-white/10 text-primary dark:text-white hover:bg-primary hover:text-white' : 'bg-gray-100 text-gray-400 cursor-not-allowed border-transparent'}`}
             >
               <Phone size={16} />

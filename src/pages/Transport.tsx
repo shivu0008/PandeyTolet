@@ -122,9 +122,9 @@ const Transport: React.FC = () => {
               <p className="mb-8 text-white/80">Have a specific requirement? Chat with Sanjeev Pandey directly on WhatsApp for an instant quote.</p>
               <div className="flex flex-wrap justify-center lg:justify-end gap-4">
                 <a href="tel:9934072003" className="bg-white text-primary font-bold py-4 px-8 rounded-xl shadow-2xl hover:bg-gray-100 transition-all">
-                  Call 9934072003
+                  Call Now
                 </a>
-                <a href="https://wa.me/919934072003" className="bg-[#25D366] text-white font-bold py-4 px-8 rounded-xl shadow-2xl hover:bg-[#128C7E] transition-all">
+                <a href="https://wa.me/919334966607" className="bg-[#25D366] text-white font-bold py-4 px-8 rounded-xl shadow-2xl hover:bg-[#128C7E] transition-all">
                   WhatsApp Us
                 </a>
               </div>

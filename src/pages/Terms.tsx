@@ -142,10 +142,10 @@ const Terms: React.FC = () => {
             </p>
             <div className="flex flex-wrap justify-center gap-8">
               <div className="flex items-center gap-3 text-primary dark:text-white font-black bg-white dark:bg-gray-800 px-6 py-3 rounded-2xl shadow-sm">
-                <Phone size={20} className="text-accent" /> 9334966607
+                <Phone size={20} className="text-accent" /> 9934072003
               </div>
               <div className="flex items-center gap-3 text-primary dark:text-white font-black bg-white dark:bg-gray-800 px-6 py-3 rounded-2xl shadow-sm">
-                <MessageCircle size={20} className="text-accent" /> 9934072003
+                <MessageCircle size={20} className="text-accent" /> 9334966607
               </div>
             </div>
           </div>

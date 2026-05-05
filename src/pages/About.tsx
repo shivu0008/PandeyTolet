@@ -113,7 +113,7 @@ const About: React.FC = () => {
                   <div className="bg-white/10 p-4 rounded-2xl text-accent shadow-inner"><Phone size={24} /></div>
                   <div>
                     <h4 className="font-black text-[9px] uppercase tracking-[0.3em] text-accent mb-1.5">Call Sanjeev Pandey</h4>
-                    <p className="text-white/80 font-black text-xl tracking-tight">+91 9334966607 <br /> +91 9934072003</p>
+                    <p className="text-white/80 font-black text-xl tracking-tight">+91 9934072003 <br /> +91 9334966607</p>
                   </div>
                 </li>
               </ul>
@@ -123,9 +123,9 @@ const About: React.FC = () => {
               <div className="text-center relative z-10 text-primary">
                 <h3 className="text-4xl md:text-5xl font-black mb-6 tracking-tight uppercase leading-none italic">Need Urgent <br /> Help?</h3>
                 <p className="text-primary/70 font-bold text-lg mb-10 max-w-xs mx-auto leading-tight">We are available 24/7 for urgent flat requirements and consultations.</p>
-                <div className="flex flex-col gap-4">
-                  <motion.a whileHover={{ scale: 1.05 }} href="tel:9334966607" className="bg-primary text-white font-black py-4 px-10 rounded-[2rem] shadow-2xl uppercase tracking-widest text-[10px]">Call Primary Number</motion.a>
-                  <motion.a whileHover={{ scale: 1.05 }} href="https://wa.me/919934072003" className="bg-white text-primary font-black py-4 px-10 rounded-[2rem] shadow-xl transition-all uppercase tracking-widest text-[10px]">Chat on WhatsApp</motion.a>
+                <div className="flex flex-wrap gap-6">
+                  <motion.a whileHover={{ scale: 1.05 }} href="tel:9934072003" className="bg-primary text-white font-black py-4 px-10 rounded-[2rem] shadow-2xl uppercase tracking-widest text-[10px]">Call Primary Number</motion.a>
+                  <motion.a whileHover={{ scale: 1.05 }} href="https://wa.me/919334966607" className="bg-white text-primary font-black py-4 px-10 rounded-[2rem] shadow-xl transition-all uppercase tracking-widest text-[10px]">Chat on WhatsApp</motion.a>
                 </div>
               </div>
             </div>

@@ -76,7 +76,7 @@ const Navbar: React.FC = () => {
                 <motion.a
                   whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(0,242,255,0.4)" }}
                   whileTap={{ scale: 0.95 }}
-                  href="tel:9334966607"
+                  href="tel:9934072003"
                   className="bg-primary text-white dark:bg-accent dark:text-primary px-8 py-4 rounded-xl font-black text-xs uppercase tracking-widest flex items-center gap-3 shadow-xl border border-white/10"
                 >
                   <Phone size={16} />
@@ -131,7 +131,7 @@ const Navbar: React.FC = () => {
               ))}
               <div className="pt-6">
                 <a
-                  href="tel:9334966607"
+                  href="tel:9934072003"
                   className="flex items-center justify-center gap-3 bg-primary text-accent w-full py-6 rounded-2xl font-black text-xl uppercase tracking-widest shadow-2xl"
                 >
                   <Phone size={24} />

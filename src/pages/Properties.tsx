@@ -251,8 +251,8 @@ const Properties: React.FC = () => {
                   <h3 className="text-3xl font-black text-primary dark:text-white tracking-tighter mb-4 italic uppercase">List Your <br /> <span className="text-accent">Property.</span></h3>
                   <p className="text-sm text-gray-500 dark:text-gray-400 font-bold leading-relaxed mb-8">Direct consultation with Sanjeev Pandey. Personal verification for every listing.</p>
                   <div className="space-y-4">
-                    <a href="tel:9334966607" className="w-full block bg-primary text-white py-4 rounded-2xl flex items-center justify-center gap-3 text-xs font-black uppercase tracking-widest shadow-xl"><Phone size={18} /> Free Consultation</a>
-                    <a href="https://wa.me/919934072003" target="_blank" className="w-full block bg-[#25D366] text-white py-4 rounded-2xl flex items-center justify-center gap-3 text-xs font-black uppercase tracking-widest shadow-lg">
+                    <a href="tel:9934072003" className="w-full block bg-primary text-white py-4 rounded-2xl flex items-center justify-center gap-3 text-xs font-black uppercase tracking-widest shadow-xl"><Phone size={18} /> Free Consultation</a>
+                    <a href="https://wa.me/919334966607" target="_blank" className="w-full block bg-[#25D366] text-white py-4 rounded-2xl flex items-center justify-center gap-3 text-xs font-black uppercase tracking-widest shadow-lg">
                       <MessageCircle size={18} /> WhatsApp Chat
                     </a>
                     </div>
