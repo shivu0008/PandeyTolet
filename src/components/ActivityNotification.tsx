@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Zap, CheckCircle, MapPin, X } from 'lucide-react';
 import { collection, getDocs, query, orderBy, limit } from 'firebase/firestore';
@@ -17,20 +17,19 @@ const ActivityNotification: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
 
-  const fetchRecentActivity = useCallback(async () => {
-    try {
-      const q = query(collection(db, 'properties'), orderBy('createdAt', 'desc'), limit(5));
-      const snapshot = await getDocs(q);
-      const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Activity));
-      setActivities(data);
-    } catch (err) {
-      console.error(err);
-    }
-  }, []);
-
   useEffect(() => {
+    const fetchRecentActivity = async () => {
+      try {
+        const q = query(collection(db, 'properties'), orderBy('createdAt', 'desc'), limit(5));
+        const snapshot = await getDocs(q);
+        const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Activity));
+        setActivities(data);
+      } catch {
+        // Error handled silently
+      }
+    };
     fetchRecentActivity();
-  }, [fetchRecentActivity]);
+  }, []);
 
   useEffect(() => {
     if (activities.length === 0) return;

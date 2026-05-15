@@ -50,7 +50,7 @@
   }
 
   .glass-morph {
-    @apply bg-white/80 dark:bg-slate-900/80 backdrop-blur-2xl border border-white/20 dark:border-white/5 shadow-2xl;
+    @apply bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-white/20 dark:border-white/5 shadow-2xl;
   }
 
   .mesh-gradient {

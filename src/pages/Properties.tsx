@@ -233,7 +233,15 @@ const Properties: React.FC = () => {
               {loading ? [...Array(4)].map((_, i) => <PropertySkeleton key={i} />) : (
                 <AnimatePresence mode="popLayout">
                   {filteredProperties.length > 0 ? filteredProperties.map((property, idx) => (
-                    <motion.div key={property.id} layout initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: idx * 0.05 }}><PropertyCard property={property} /></motion.div>
+                    <motion.div 
+                      key={property.id} 
+                      initial={{ opacity: 0, y: 20 }} 
+                      whileInView={{ opacity: 1, y: 0 }} 
+                      viewport={{ once: true, margin: "-50px" }} 
+                      transition={{ duration: 0.4, delay: Math.min(idx * 0.05, 0.3) }}
+                    >
+                      <PropertyCard property={property} />
+                    </motion.div>
                   )) : (
                     <div className="col-span-full py-20 text-center glass-morph rounded-[3rem]"><Building2 className="mx-auto text-accent mb-4 opacity-20" size={60} /><p className="text-xl font-black text-gray-400 uppercase italic">No matching properties found.</p></div>
                   )}

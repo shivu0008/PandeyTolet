@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { auth, db } from '../firebase/config';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { onAuthStateChanged, signOut, type User } from 'firebase/auth';
 import { collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, updateDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import imageCompression from 'browser-image-compression';
@@ -10,12 +10,36 @@ import {
   Tag, Star, Zap
 } from 'lucide-react';
 
+interface Property {
+  id: string;
+  title: string;
+  price: string;
+  location: string;
+  type: string;
+  category: string;
+  beds: number;
+  baths: number;
+  featured: boolean;
+  status: string;
+  image: string;
+  images: string[];
+  createdAt: string;
+}
+
+interface Review {
+  id: string;
+  name: string;
+  rating: number;
+  comment: string;
+  createdAt: string;
+}
+
 const AdminDashboard: React.FC = () => {
-  const [, setUser] = useState<any>(null);
+  const [, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'listings' | 'reviews'>('listings');
-  const [properties, setProperties] = useState<any[]>([]);
-  const [reviews, setReviews] = useState<any[]>([]);
+  const [properties, setProperties] = useState<Property[]>([]);
+  const [reviews, setReviews] = useState<Review[]>([]);
   const [uploading, setUploading] = useState(false);
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
@@ -50,7 +74,7 @@ const AdminDashboard: React.FC = () => {
     try {
       const q = query(collection(db, 'properties'), orderBy('createdAt', 'desc'));
       const querySnapshot = await getDocs(q);
-      const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Property));
       setProperties(data);
     } catch (err) { console.error(err); }
   };
@@ -59,7 +83,7 @@ const AdminDashboard: React.FC = () => {
     try {
       const q = query(collection(db, 'reviews'), orderBy('createdAt', 'desc'));
       const querySnapshot = await getDocs(q);
-      const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Review));
       setReviews(data);
     } catch (err) { console.error(err); }
   };
@@ -113,15 +137,18 @@ const AdminDashboard: React.FC = () => {
       setSelectedFiles([]); setPreviews([]);
       fetchProperties();
       setTimeout(() => setSuccess(''), 3000);
-    } catch (err: any) { setError(err.message); } finally { setUploading(false); }
+    } catch (err: unknown) { 
+      if (err instanceof Error) setError(err.message);
+      else setError('An error occurred during upload.');
+    } finally { setUploading(false); }
   };
 
-  const toggleStatus = async (property: any) => {
+  const toggleStatus = async (property: Property) => {
     const newStatus = property.status === 'Available' ? (property.type === 'Rent' ? 'Rented Out' : 'Sold') : 'Available';
     try {
       await updateDoc(doc(db, 'properties', property.id), { status: newStatus });
       fetchProperties();
-    } catch (err) { alert('Failed'); }
+    } catch { alert('Failed'); }
   };
 
   const handleDeleteProperty = async (id: string) => {
@@ -129,7 +156,7 @@ const AdminDashboard: React.FC = () => {
     try {
       await deleteDoc(doc(db, 'properties', id));
       fetchProperties();
-    } catch (err) { alert('Failed'); }
+    } catch { alert('Failed'); }
   };
 
   const handleDeleteReview = async (id: string) => {
@@ -137,7 +164,7 @@ const AdminDashboard: React.FC = () => {
     try {
       await deleteDoc(doc(db, 'reviews', id));
       fetchReviews();
-    } catch (err) { alert('Failed'); }
+    } catch { alert('Failed'); }
   };
 
   if (loading) return <div className="min-h-screen flex items-center justify-center bg-[#020D1A]"><div className="w-16 h-16 border-4 border-accent border-t-transparent rounded-full animate-spin"></div></div>;

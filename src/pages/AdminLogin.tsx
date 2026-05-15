@@ -20,7 +20,7 @@ const AdminLogin: React.FC = () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       navigate('/admin-dashboard');
-    } catch (err: any) {
+    } catch (err: unknown) {
       setError('Invalid credentials. Access denied.');
       console.error(err);
     } finally {

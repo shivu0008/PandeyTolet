@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { MapPin, Bed, Bath, Phone, MessageCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface PropertyCardProps {
@@ -19,22 +19,35 @@ interface PropertyCardProps {
   };
 }
 
+const optimizeUrl = (url: string) => {
+  if (!url || !url.includes('cloudinary.com')) return url;
+  if (url.includes('upload/')) {
+    return url.replace('upload/', 'upload/f_auto,q_auto,w_800/');
+  }
+  return url;
+};
+
 const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
+  const cardRef = useRef(null);
+  const isInView = useInView(cardRef, { once: false, amount: 0.1 });
   const [currentImg, setCurrentImg] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const gallery = property.images && property.images.length > 0 ? property.images : [property.image];
+  
+  const rawGallery = property.images && property.images.length > 0 ? property.images : [property.image];
+  const gallery = rawGallery.map(optimizeUrl);
+  
   const isAvailable = !property.status || property.status === 'Available';
   
-  // Automatic Slideshow Logic
+  // Automatic Slideshow Logic - Only runs when in view
   useEffect(() => {
-    if (gallery.length <= 1 || isPaused || !isAvailable) return;
+    if (gallery.length <= 1 || isPaused || !isAvailable || !isInView) return;
 
     const timer = setInterval(() => {
       setCurrentImg((prev) => (prev + 1) % gallery.length);
-    }, 4000); // Cycles every 4 seconds
+    }, 4000);
 
     return () => clearInterval(timer);
-  }, [gallery.length, isPaused, isAvailable]);
+  }, [gallery.length, isPaused, isAvailable, isInView]);
 
   const nextImg = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -61,6 +74,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
 
   return (
     <motion.div
+      ref={cardRef}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       whileHover={isAvailable ? { y: -15 } : {}}

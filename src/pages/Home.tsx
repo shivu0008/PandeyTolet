@@ -64,7 +64,7 @@ const Home: React.FC = () => {
       const revQ = query(collection(db, 'reviews'), orderBy('createdAt', 'desc'), limit(6));
       const revSnap = await getDocs(revQ);
       setReviews(revSnap.docs.map(doc => ({ id: doc.id, ...doc.data() } as Review)));
-    } catch (err) { console.error(err); } finally { setLoading(false); }
+    } catch (_err) { console.error(_err); } finally { setLoading(false); }
   };
 
   useEffect(() => {
@@ -80,7 +80,7 @@ const Home: React.FC = () => {
       setNewReview({ name: '', rating: 5, comment: '' });
       fetchLiveContent();
       alert('Thank you!');
-    } catch (err) { alert('Error'); } finally { setSubmitting(false); }
+    } catch { alert('Error'); } finally { setSubmitting(false); }
   };
 
   const services = [

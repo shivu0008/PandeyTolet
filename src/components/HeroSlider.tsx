@@ -3,16 +3,43 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, IndianRupee, ArrowRight, ChevronLeft, ChevronRight, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-interface HeroSliderProps {
-  properties: any[];
+interface Property {
+  id: string;
+  title: string;
+  price: string;
+  location: string;
+  image: string;
 }
+
+interface HeroSliderProps {
+  properties: Property[];
+}
+
+const optimizeUrl = (url: string, width = 1200, blur = false) => {
+  if (!url || !url.includes('cloudinary.com')) return url;
+  if (url.includes('upload/')) {
+    const params = blur ? `f_auto,q_10,w_50,e_blur:1000/` : `f_auto,q_auto,w_${width}/`;
+    return url.replace('upload/', `upload/${params}`);
+  }
+  return url;
+};
 
 const HeroSlider: React.FC<HeroSliderProps> = ({ properties }) => {
   const [current, setCurrent] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  // Preload next image
+  useEffect(() => {
+    if (properties.length <= 1) return;
+    const nextIndex = (current + 1) % properties.length;
+    const img = new Image();
+    img.src = optimizeUrl(properties[nextIndex].image);
+  }, [current, properties]);
 
   useEffect(() => {
     if (properties.length <= 1) return;
     const timer = setInterval(() => {
+      setIsLoaded(false);
       setCurrent((prev) => (prev + 1) % properties.length);
     }, 5000);
     return () => clearInterval(timer);
@@ -20,7 +47,7 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ properties }) => {
 
   if (properties.length === 0) {
     return (
-      <div className="w-full h-[600px] rounded-[3rem] bg-white/5 border border-white/10 flex items-center justify-center">
+      <div className="w-full h-[550px] lg:h-[650px] rounded-[4rem] bg-gray-100 dark:bg-white/5 animate-pulse flex items-center justify-center border border-white/10">
         <p className="text-gray-500 font-black uppercase tracking-widest italic text-xs">Loading Fresh Listings...</p>
       </div>
     );
@@ -33,13 +60,27 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ properties }) => {
       <AnimatePresence mode="wait">
         <motion.div
           key={current}
-          initial={{ opacity: 0, scale: 1.1 }}
+          initial={{ opacity: 0, scale: 1.05 }}
           animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
+          exit={{ opacity: 0, scale: 0.98 }}
           transition={{ duration: 0.8, ease: "easeInOut" }}
-          className="absolute inset-0 rounded-[4rem] overflow-hidden border-[12px] border-white/50 dark:border-gray-800/50 shadow-[0_50px_100px_rgba(0,0,0,0.3)] backdrop-blur-xl"
+          className="absolute inset-0 rounded-[4rem] overflow-hidden border-[12px] border-white/50 dark:border-gray-800/50 shadow-[0_50px_100px_rgba(0,0,0,0.3)] backdrop-blur-xl bg-gray-200 dark:bg-slate-800"
         >
-          <img src={slide.image} alt={slide.title} className="w-full h-full object-cover" />
+          {/* Blur Placeholder */}
+          <img 
+            src={optimizeUrl(slide.image, 50, true)} 
+            alt="" 
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${isLoaded ? 'opacity-0' : 'opacity-100'}`}
+          />
+          
+          {/* Main Image */}
+          <motion.img 
+            src={optimizeUrl(slide.image)} 
+            alt={slide.title} 
+            onLoad={() => setIsLoaded(true)}
+            className={`w-full h-full object-cover transition-opacity duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+          />
+          
           <div className="absolute inset-0 bg-gradient-to-t from-primary via-transparent to-transparent opacity-80"></div>
           
           {/* Floating Details Card */}
