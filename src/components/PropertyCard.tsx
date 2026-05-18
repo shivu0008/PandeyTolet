@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
-import { MapPin, Bed, Bath, Phone, MessageCircle, ChevronLeft, ChevronRight } from 'lucide-react';
+import { MapPin, Bed, Bath, Phone, MessageCircle, ChevronLeft, ChevronRight, Home, Building2 } from 'lucide-react';
 
 interface PropertyCardProps {
   property: {
@@ -33,7 +33,9 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
   const [currentImg, setCurrentImg] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   
-  const rawGallery = property.images && property.images.length > 0 ? property.images : [property.image];
+  const rawGallery = property.images && property.images.length > 0 
+    ? property.images 
+    : (property.image ? [property.image] : []);
   const gallery = rawGallery.map(optimizeUrl);
   
   const isAvailable = !property.status || property.status === 'Available';
@@ -72,6 +74,8 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
 
   const whatsappUrl = `https://wa.me/919334966607?text=${encodeURIComponent(message)}`;
 
+  const PlaceholderIcon = property.category === 'Residential' ? Home : Building2;
+
   return (
     <motion.div
       ref={cardRef}
@@ -81,17 +85,23 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
       className={`group relative bg-white dark:bg-gray-800 rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.05)] transition-all duration-500 border border-gray-100 dark:border-gray-700 ${!isAvailable ? 'opacity-80' : 'hover:shadow-accent/20'}`}
     >
       <div className="relative h-60 md:h-72 overflow-hidden">
-        <AnimatePresence mode="wait">
-          <motion.img
-            key={currentImg}
-            src={gallery[currentImg]}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.6, ease: "easeInOut" }}
-            className={`absolute inset-0 w-full h-full object-cover ${!isAvailable ? 'grayscale-[0.5]' : ''}`}
-          />
-        </AnimatePresence>
+        {gallery.length > 0 ? (
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={currentImg}
+              src={gallery[currentImg]}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.6, ease: "easeInOut" }}
+              className={`absolute inset-0 w-full h-full object-cover ${!isAvailable ? 'grayscale-[0.5]' : ''}`}
+            />
+          </AnimatePresence>
+        ) : (
+          <div className="absolute inset-0 bg-accent/5 dark:bg-accent/5 flex items-center justify-center">
+            <PlaceholderIcon size={64} className="text-accent animate-pulse" />
+          </div>
+        )}
 
         {/* Gallery Navigation */}
         {gallery.length > 1 && isAvailable && (

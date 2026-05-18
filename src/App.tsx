@@ -1,5 +1,5 @@
-import { Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Suspense, lazy, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import { ThemeProvider } from './components/ThemeContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -21,10 +21,29 @@ const PageLoader = () => (
   </div>
 );
 
+const AdminShortcut: React.FC = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Shortcut for laptop: Alt + A
+      if (e.altKey && e.key.toLowerCase() === 'a') {
+        e.preventDefault();
+        navigate('/admin-login');
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [navigate]);
+
+  return null;
+};
+
 function App() {
   return (
     <ThemeProvider>
       <Router>
+        <AdminShortcut />
         <ScrollToTop />
         <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900 transition-colors duration-300">
           <Navbar />

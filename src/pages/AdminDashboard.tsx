@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import imageCompression from 'browser-image-compression';
 import { 
   Plus, Image as ImageIcon, Trash2, 
-  Tag, Star, Zap
+  Tag, Star, Zap, Home, Building2
 } from 'lucide-react';
 
 interface Property {
@@ -115,7 +115,6 @@ const AdminDashboard: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (selectedFiles.length === 0) return alert('Please select images!');
     setUploading(true);
     try {
       const imageUrls = [];
@@ -126,7 +125,7 @@ const AdminDashboard: React.FC = () => {
       await addDoc(collection(db, 'properties'), {
         ...formData,
         images: imageUrls,
-        image: imageUrls[0],
+        image: imageUrls.length > 0 ? imageUrls[0] : '',
         createdAt: new Date().toISOString(),
         beds: formData.category === 'Residential' ? Number(formData.beds) : 0,
         baths: formData.category === 'Residential' ? Number(formData.baths) : 0,
@@ -228,26 +227,35 @@ const AdminDashboard: React.FC = () => {
                     {previews.length > 0 && <div className="flex flex-wrap gap-2 py-2">{previews.map((url, i) => <div key={i} className="w-16 h-16 rounded-lg overflow-hidden border border-accent/20"><img src={url} className="w-full h-full object-cover" /></div>)}</div>}
                     {error && <div className="text-red-500 text-[10px] font-bold uppercase">{error}</div>}
                     {success && <div className="text-green-500 text-[10px] font-bold uppercase">{success}</div>}
-                    <button type="submit" disabled={uploading || selectedFiles.length === 0} className="w-full btn-shiny !bg-accent !text-primary !py-4 rounded-2xl font-black uppercase tracking-widest text-xs">Publish Listing</button>
+                    <button type="submit" disabled={uploading} className="w-full btn-shiny !bg-accent !text-primary !py-4 rounded-2xl font-black uppercase tracking-widest text-xs">Publish Listing</button>
                   </form>
                 </div>
               </div>
               <div className="lg:col-span-7">
                 <h3 className="text-xl font-black text-primary dark:text-white uppercase italic mb-8 px-4 flex items-center gap-2"><Zap size={20} className="text-accent" /> Live Listings</h3>
                 <div className="space-y-4">
-                  {properties.map((p) => (
-                    <div key={p.id} className={`bg-white dark:bg-slate-900 p-4 rounded-[2rem] border border-gray-100 dark:border-white/5 shadow-xl flex gap-4 items-center group ${p.status !== 'Available' ? 'opacity-60 grayscale-[0.5]' : ''}`}>
-                      <img src={p.image} className="w-20 h-20 rounded-xl object-cover shadow-lg" />
-                      <div className="flex-grow">
-                        <h4 className="font-black text-sm dark:text-white uppercase tracking-tight">{p.title}</h4>
-                        <div className="flex items-center gap-3 mt-1"><p className="text-accent font-bold text-xs">{p.price}</p><span className={`text-[8px] px-2 py-0.5 rounded font-black uppercase ${p.status === 'Available' ? 'bg-green-500/10 text-green-500' : 'bg-red-500/10 text-red-500'}`}>{p.status}</span></div>
+                  {properties.map((p) => {
+                    const PlaceholderIcon = p.category === 'Residential' ? Home : Building2;
+                    return (
+                      <div key={p.id} className={`bg-white dark:bg-slate-900 p-4 rounded-[2rem] border border-gray-100 dark:border-white/5 shadow-xl flex gap-4 items-center group ${p.status !== 'Available' ? 'opacity-60 grayscale-[0.5]' : ''}`}>
+                        {p.image ? (
+                          <img src={p.image} className="w-20 h-20 rounded-xl object-cover shadow-lg" />
+                        ) : (
+                          <div className="w-20 h-20 rounded-xl bg-gray-100 dark:bg-white/5 flex items-center justify-center shadow-lg border border-gray-100 dark:border-white/10">
+                            <PlaceholderIcon size={24} className="text-accent" />
+                          </div>
+                        )}
+                        <div className="flex-grow">
+                          <h4 className="font-black text-sm dark:text-white uppercase tracking-tight">{p.title}</h4>
+                          <div className="flex items-center gap-3 mt-1"><p className="text-accent font-bold text-xs">{p.price}</p><span className={`text-[8px] px-2 py-0.5 rounded font-black uppercase ${p.status === 'Available' ? 'bg-green-500/10 text-green-500' : 'bg-red-500/10 text-red-500'}`}>{p.status}</span></div>
+                        </div>
+                        <div className="flex gap-2">
+                          <button onClick={() => toggleStatus(p)} className="p-3 text-primary dark:text-white bg-gray-100 dark:bg-white/5 rounded-xl hover:bg-accent hover:text-primary shadow-md"><Tag size={18} /></button>
+                          <button onClick={() => handleDeleteProperty(p.id)} className="p-3 text-red-500 bg-red-500/5 rounded-xl hover:bg-red-500 hover:text-white transition-all shadow-md"><Trash2 size={18} /></button>
+                        </div>
                       </div>
-                      <div className="flex gap-2">
-                        <button onClick={() => toggleStatus(p)} className="p-3 text-primary dark:text-white bg-gray-100 dark:bg-white/5 rounded-xl hover:bg-accent hover:text-primary shadow-md"><Tag size={18} /></button>
-                        <button onClick={() => handleDeleteProperty(p.id)} className="p-3 text-red-500 bg-red-500/5 rounded-xl hover:bg-red-500 hover:text-white transition-all shadow-md"><Trash2 size={18} /></button>
-                      </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             </motion.div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, Phone, Moon, Sun, ArrowRight } from 'lucide-react';
 import { useTheme } from './ThemeContext';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -9,6 +9,23 @@ const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const location = useLocation();
+  const navigate = useNavigate();
+  const [touchTimeout, setTouchTimeout] = useState<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleTouchStart = () => {
+    // 2-second long press for mobile shortcut
+    const timeout = setTimeout(() => {
+      navigate('/admin-login');
+    }, 2000);
+    setTouchTimeout(timeout);
+  };
+
+  const handleTouchEnd = () => {
+    if (touchTimeout) {
+      clearTimeout(touchTimeout);
+      setTouchTimeout(null);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,7 +51,12 @@ const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className={`glass-morph border-white/20 px-6 py-3 rounded-[2.5rem] transition-all duration-500 ${scrolled ? 'shadow-2xl scale-[0.98] !bg-white/95 dark:!bg-slate-900/95' : 'bg-black/20 backdrop-blur-md'}`}>
           <div className="flex justify-between items-center">
-            <Link to="/" className="flex items-center gap-4 group">
+            <Link 
+              to="/" 
+              className="flex items-center gap-4 group"
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+            >
               <div className="relative w-14 h-14 transition-transform group-hover:scale-110 duration-500">
                 <img src="/logo.svg" alt="Pandey To-Let Logo" className="w-full h-full object-contain" />
                 <div className="absolute inset-0 bg-accent/20 blur-xl rounded-full -z-10 animate-pulse"></div>

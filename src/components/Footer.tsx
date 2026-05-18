@@ -42,8 +42,7 @@ const Footer: React.FC = () => {
               {[
                 { name: 'Home', path: '/' },
                 { name: 'Properties', path: '/properties' },
-                { name: 'About Us', path: '/about' },
-                { name: 'Terms', path: '/terms-and-conditions' }
+                { name: 'About Us', path: '/about' }
               ].map((link) => (
                 <li key={link.name}>
                   <Link to={link.path} className="text-gray-500 dark:text-gray-400 hover:text-accent font-black text-xs uppercase tracking-widest transition-all hover:pl-2">

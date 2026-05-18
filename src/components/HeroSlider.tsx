@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MapPin, IndianRupee, ArrowRight, ChevronLeft, ChevronRight, Zap } from 'lucide-react';
+import { MapPin, IndianRupee, ArrowRight, ChevronLeft, ChevronRight, Zap, Home, Building2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface Property {
@@ -9,6 +9,7 @@ interface Property {
   price: string;
   location: string;
   image: string;
+  category?: string;
 }
 
 interface HeroSliderProps {
@@ -32,8 +33,11 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ properties }) => {
   useEffect(() => {
     if (properties.length <= 1) return;
     const nextIndex = (current + 1) % properties.length;
-    const img = new Image();
-    img.src = optimizeUrl(properties[nextIndex].image);
+    const nextSlide = properties[nextIndex];
+    if (nextSlide.image) {
+      const img = new Image();
+      img.src = optimizeUrl(nextSlide.image);
+    }
   }, [current, properties]);
 
   useEffect(() => {
@@ -54,6 +58,7 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ properties }) => {
   }
 
   const slide = properties[current];
+  const PlaceholderIcon = slide.category === 'Residential' ? Home : Building2;
 
   return (
     <div className="relative group w-full h-[550px] lg:h-[650px]">
@@ -66,20 +71,28 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ properties }) => {
           transition={{ duration: 0.8, ease: "easeInOut" }}
           className="absolute inset-0 rounded-[4rem] overflow-hidden border-[12px] border-white/50 dark:border-gray-800/50 shadow-[0_50px_100px_rgba(0,0,0,0.3)] backdrop-blur-xl bg-gray-200 dark:bg-slate-800"
         >
-          {/* Blur Placeholder */}
-          <img 
-            src={optimizeUrl(slide.image, 50, true)} 
-            alt="" 
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${isLoaded ? 'opacity-0' : 'opacity-100'}`}
-          />
-          
-          {/* Main Image */}
-          <motion.img 
-            src={optimizeUrl(slide.image)} 
-            alt={slide.title} 
-            onLoad={() => setIsLoaded(true)}
-            className={`w-full h-full object-cover transition-opacity duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
-          />
+          {slide.image ? (
+            <>
+              {/* Blur Placeholder */}
+              <img 
+                src={optimizeUrl(slide.image, 50, true)} 
+                alt="" 
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${isLoaded ? 'opacity-0' : 'opacity-100'}`}
+              />
+              
+              {/* Main Image */}
+              <motion.img 
+                src={optimizeUrl(slide.image)} 
+                alt={slide.title} 
+                onLoad={() => setIsLoaded(true)}
+                className={`w-full h-full object-cover transition-opacity duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+              />
+            </>
+          ) : (
+            <div className="absolute inset-0 bg-accent/5 flex items-center justify-center">
+              <PlaceholderIcon size={120} className="text-accent animate-pulse" />
+            </div>
+          )}
           
           <div className="absolute inset-0 bg-gradient-to-t from-primary via-transparent to-transparent opacity-80"></div>
           
